@@ -1,0 +1,68 @@
+<template>
+	<div class="page no-navbar">
+		<div class="page-content">
+			<div class="container">
+				<div class="separator"></div>
+				<div class="title-home">
+					<div class="content">
+						<span>Selamat datang di </span>
+						<h1>Daily Facts</h1>
+						<p>Daily Facts berguna untuk mengetahui beberapa fakta harian menarik.</p>
+					</div>
+				</div>
+			</div>
+			<div class="segments-page">
+				<div class="container">
+					<div class="accordion accordion-icon content-entry">
+						<div class="list accordion-list">
+							<ul>
+								{{#each data}}
+								<li class="accordion-item">
+									<a href="" class="item-link item-content">
+										<div class="item-inner">
+											<div class="item-title">Tahukah Anda?</div>
+										</div>
+									</a>
+									<div class="accordion-item-content">
+										<p>{{this.tahukahAnda}}</p>
+									</div>
+								</li>
+								{{/each}}
+							</ul>
+						</div>
+					</div>					
+				</div>
+			</div>
+		</div>
+	</div>
+</template>
+<script>
+	export default{
+		mounted() {
+			var $this = this;
+			var app = this.$app;
+			var $$ = this.$$;
+			var self = this;
+		},
+		on: {
+			pageInit: function () {
+				var self = this;
+				var $this = this;
+				var app = this.$app;
+				var $$ = this.$$;
+				var response = new Array();
+
+				app.request.get('https://cinnabar.icaksh.my.id/api/public/daily/wiki', (data, status, xhr) => {
+					response = JSON.parse(data);
+					response.data.forEach(value => {
+						value.tahukahAnda = value.tahukahAnda.replace(/"/g, '');
+						value.tahukahAnda = value.tahukahAnda.replace(/\./g, '');
+					});
+					self.$setState({
+						data: response.data
+					});
+				});
+			},
+		}
+	}
+</script>
