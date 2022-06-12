@@ -1,36 +1,24 @@
 <template>
-	<div class="page no-navbar">
-		<div class="page-content">
-			<div class="container">
-				<div class="separator"></div>
-				<div class="title-home">
-					<div class="content">
-						<span>Selamat datang di </span>
-						<h1>Daily Facts</h1>
-						<p>Daily Facts berguna untuk mengetahui beberapa fakta harian menarik.</p>
-					</div>
-				</div>
+	<div class="page">
+		<div class="navbar">
+			<div class="navbar-bg"></div>
+			<div class="navbar-inner sliding">
+				<div class="title">Rakoko App</div>
 			</div>
-			<div class="segments-page">
-				<div class="container">
-					<div class="accordion accordion-icon content-entry">
-						<div class="list accordion-list">
-							<ul>
-								{{#each data}}
-								<li class="accordion-item">
-									<a href="" class="item-link item-content">
-										<div class="item-inner">
-											<div class="item-title">Tahukah Anda?</div>
-										</div>
-									</a>
-									<div class="accordion-item-content">
-										<p>{{this.tahukahAnda}}</p>
-									</div>
-								</li>
-								{{/each}}
-							</ul>
-						</div>
-					</div>					
+		</div>
+		<div class="page-content">
+			<div class="block-title">Welcome to Rakoko App</div>
+			<div class="card demo-card-header-pic">
+				{{#if dataImages}}
+				<div style="background-image:url('{{dataImages.url}}'); height: 175px;" class="card-header align-items-flex-end"></div>
+				{{else}}
+				{{/if}}
+			  	<div class="card-content card-content-padding">
+					{{#if dataQuotes}}
+					<p class="date">{{dataQuotes.anime}}</p>
+					<p>{{dataQuotes.quote}}<br>— {{dataQuotes.name}}</p>
+					{{else}}
+					{{/if}}
 				</div>
 			</div>
 		</div>
@@ -50,19 +38,59 @@
 				var $this = this;
 				var app = this.$app;
 				var $$ = this.$$;
-				var response = new Array();
 
-				app.request.get('https://cinnabar.icaksh.my.id/api/public/daily/wiki', (data, status, xhr) => {
-					response = JSON.parse(data);
-					response.data.forEach(value => {
-						value.tahukahAnda = value.tahukahAnda.replace(/"/g, '');
-						value.tahukahAnda = value.tahukahAnda.replace(/\./g, '');
-					});
+				var responseQuotes = new Array();
+				var responseImages = new Array();
+				var day = new Date();
+        		var weekdays = new Array(7);
+
+       			weekdays[0] = "Sunday";
+        		weekdays[1] = "Monday";
+        		weekdays[2] = "Tuesday";
+        		weekdays[3] = "Wednesday";
+        		weekdays[4] = "Thursday";
+        		weekdays[5] = "Friday";
+        		weekdays[6] = "Saturday";
+
+        		var today = weekdays[day.getDay()];
+
+				app.request.get('https://api.rei.my.id/v3/quotes', (data, status, xhr) => {
+					responseQuotes = JSON.parse(data);
 					self.$setState({
-						data: response.data
+						dataQuotes: responseQuotes
 					});
 				});
+
+				if(today == "Monday" || today == "Tuesday" || today == "Wednesday") {
+					app.request.get('https://api.rei.my.id/v3/slap', (data, status, xhr) => {
+						responseImages = JSON.parse(data);
+						self.$setState({
+							dataImages: responseImages
+						});
+					});
+				}else if(today == "Thursday" || today == "Friday") {
+					app.request.get('https://api.rei.my.id/v3/hug', (data, status, xhr) => {
+						responseImages = JSON.parse(data);
+						self.$setState({
+							dataImages: responseImages
+						});
+					});
+				}else if(today == "Saturday" || today == "Sunday") {
+					app.request.get('https://api.rei.my.id/v3/hug', (data, status, xhr) => {
+						responseImages = JSON.parse(data);
+						self.$setState({
+							dataImages: responseImages
+						});
+					});
+				}else {
+					app.request.get('https://api.rei.my.id/v3/slap', (data, status, xhr) => {
+						responseImages = JSON.parse(data);
+						self.$setState({
+							dataImages: responseImages
+						});
+					});
+				}
 			},
-		}
+		},
 	}
 </script>

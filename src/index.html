@@ -9,7 +9,7 @@
 	<meta name="theme-color" content="#396EB0">
 	<meta name="format-detection" content="telephone=no">
 	<meta name="msapplication-tap-highlight" content="no">
-	<title>Daily Facts</title>
+	<title>Rakoko App</title>
 	<% if (process.env.TARGET === 'web') { %>
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -17,17 +17,11 @@
 	<link rel="icon" href="static/icons/favicon.png">
 	<% } %>
 	<link rel="icon" href="static/images/favicon.png">
-	<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500,500i,700,900&display=swap" rel="stylesheet">
-	<link rel="stylesheet" href="static/css/framework7.bundle.min.css">
-	<link rel="stylesheet" href="static/css/font-awesome.min.css">
-	<link rel="stylesheet" href="static/css/style.css">
 </head>
 <body class="color-theme-blue">
 	<div id="app"></div>
 	<% if (process.env.TARGET === 'cordova') { %>
 	<script src="cordova.js"></script>
 	<% } %>
-	<script src="static/js/framework7.min.js"></script>
-	<script src="static/js/jquery-2.1.0.min.js"></script>
 </body>
 </html>

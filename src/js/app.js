@@ -19,7 +19,7 @@ var app = new Framework7({
   root: '#app', // App root element
   component: App, // App main component
   id: 'io.framework7.myapp', // App bundle ID
-  name: 'Daily Facts', // App name
+  name: 'Rakoko App', // App name
   theme: 'ios', // Automatic theme detection
 
 
