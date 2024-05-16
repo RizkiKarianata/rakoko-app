@@ -2,7 +2,11 @@
   "name": "rakoko_app",
   "version": "1.0.0",
   "description": "Rakoko App",
-  "repository": "",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/RizkiKarianata/rakoko-app"
+  },
+  "author": "Rizki Karianata",
   "license": "UNLICENSED",
   "scripts": {
     "start": "npm run dev",
